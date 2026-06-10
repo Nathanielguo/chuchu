@@ -33,18 +33,14 @@
 
 ## 🚀 使用方法
 
-1. 下载 `出处-溯源与金句.html`
+1. 试用链接：https://chuchu.gzl406633204.workers.dev/
 2. 在 [platform.deepseek.com](https://platform.deepseek.com) 创建 API Key
-3. 用任意现代浏览器打开文件，进入「设置」粘贴 Key，保存
-4. 开始使用
-
-**手机端**：将文件放入 iCloud Drive / 网盘后用手机浏览器打开，或直接传输到手机打开。Safari 中可「添加到主屏幕」，获得接近原生 App 的全屏体验。
+3. 开始使用
 
 ## 🛠 技术说明
 
 - **架构**：单文件 HTML + 原生 JavaScript，无任何构建步骤与外部依赖
 - **AI**：浏览器直连 DeepSeek Chat Completions API（`https://api.deepseek.com`）
-- **数据**：API Key 与引用库均保存在本机 localStorage，完全本地化，无后端
 - **设计**：Apple 设计语言 —— 浅灰底色、白色圆角卡片、系统字体、毛玻璃导航、单一蓝色点缀
 - **响应式**：桌面与移动端自适应，支持 iOS 安全区与减弱动态效果（`prefers-reduced-motion`）
 
