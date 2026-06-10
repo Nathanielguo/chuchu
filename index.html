@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>出处 · 溯源与金句</title>
+<style>
+:root{
+  --bg:#f5f5f7;
+  --card:#ffffff;
+  --text:#1d1d1f;
+  --text2:#6e6e73;
+  --text3:#aeaeb2;
+  --blue:#0071e3;
+  --blue-hover:#0077ed;
+  --green:#34c759;
+  --orange:#ff9500;
+  --red:#ff3b30;
+  --line:#d2d2d7;
+  --radius:18px;
+  --radius-s:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:17px}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro SC","PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+/* ---------- Nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  background:rgba(251,251,253,.8);
+  border-bottom:1px solid rgba(0,0,0,.08);
+}
+.nav-inner{
+  max-width:920px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;height:52px;
+}
+.logo{font-size:19px;font-weight:600;letter-spacing:-.01em}
+.logo span{color:var(--text3);font-weight:400;font-size:13px;margin-left:8px}
+.tabs{display:flex;gap:4px;background:rgba(0,0,0,.05);border-radius:99px;padding:3px}
+.tab{
+  border:none;background:transparent;cursor:pointer;
+  font-family:inherit;font-size:13px;color:var(--text2);
+  padding:6px 14px;border-radius:99px;transition:all .25s ease;
+  white-space:nowrap;
+}
+.tab.active{background:#fff;color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.12);font-weight:500}
+/* ---------- Layout ---------- */
+.page{max-width:920px;margin:0 auto;padding:40px 22px 80px;display:none;animation:fade .35s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.hero{text-align:center;margin:24px 0 40px}
+.hero h1{font-size:clamp(30px,5.5vw,44px);font-weight:700;letter-spacing:-.022em;line-height:1.1}
+.hero p{color:var(--text2);font-size:clamp(15px,2.4vw,19px);margin-top:10px;font-weight:400}
+/* ---------- Input ---------- */
+.inputwrap{max-width:680px;margin:0 auto}
+textarea{
+  width:100%;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--card);padding:18px 20px;font-family:inherit;font-size:17px;
+  color:var(--text);resize:none;min-height:110px;line-height:1.5;
+  transition:border-color .2s,box-shadow .2s;outline:none;
+}
+textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,113,227,.12)}
+textarea::placeholder{color:var(--text3)}
+.opts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+select{
+  appearance:none;-webkit-appearance:none;
+  border:1px solid var(--line);background:var(--card) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="%236e6e73" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>') no-repeat right 14px center;
+  border-radius:99px;padding:8px 34px 8px 16px;font-family:inherit;font-size:14px;color:var(--text);
+  cursor:pointer;outline:none;
+}
+.btn{
+  border:none;cursor:pointer;font-family:inherit;
+  background:var(--blue);color:#fff;font-size:16px;font-weight:500;
+  border-radius:99px;padding:12px 28px;transition:background .2s,transform .1s;
+  margin-left:auto;
+}
+.btn:hover{background:var(--blue-hover)}
+.btn:active{transform:scale(.97)}
+.btn:disabled{background:var(--text3);cursor:default}
+.btn-ghost{
+  background:transparent;color:var(--blue);border:none;cursor:pointer;
+  font-family:inherit;font-size:14px;padding:8px 12px;font-weight:500;
+}
+.btn-ghost:hover{text-decoration:underline}
+/* ---------- Cards ---------- */
+.results{max-width:680px;margin:32px auto 0;display:flex;flex-direction:column;gap:16px}
+.card{
+  background:var(--card);border-radius:var(--radius);padding:26px;
+  box-shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.05);
+  animation:fade .4s ease;
+}
+.quote{font-size:21px;font-weight:600;letter-spacing:-.015em;line-height:1.45;margin-bottom:6px}
+.quote-orig{font-size:15px;color:var(--text2);font-style:italic;line-height:1.5;margin-bottom:14px}
+.meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.source{font-size:15px;color:var(--text2)}
+.source b{color:var(--text);font-weight:600}
+.badge{font-size:12px;font-weight:600;border-radius:99px;padding:3px 10px}
+.badge.high{background:rgba(52,199,89,.14);color:#1d8a3e}
+.badge.mid{background:rgba(255,149,0,.14);color:#b36800}
+.badge.low{background:rgba(255,59,48,.12);color:#c4271d}
+.badge.rewrite{background:rgba(0,113,227,.1);color:var(--blue)}
+.warn{
+  font-size:13px;color:#b36800;background:rgba(255,149,0,.1);
+  border-radius:var(--radius-s);padding:10px 14px;margin:10px 0;line-height:1.5;
+}
+.context{font-size:14px;color:var(--text2);line-height:1.6;margin-top:10px}
+.cardfoot{display:flex;gap:6px;margin-top:16px;border-top:1px solid rgba(0,0,0,.06);padding-top:12px}
+.alt{margin-top:14px}
+.alt summary{font-size:14px;color:var(--blue);cursor:pointer;font-weight:500;list-style:none}
+.alt summary::-webkit-details-marker{display:none}
+.alt-item{font-size:14px;color:var(--text2);padding:10px 0;border-bottom:1px solid rgba(0,0,0,.05);line-height:1.5}
+.alt-item:last-child{border:none}
+.sec-label{
+  max-width:680px;margin:36px auto 0;font-size:13px;font-weight:600;color:var(--text2);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.loading{
+  max-width:680px;margin:40px auto;text-align:center;color:var(--text2);font-size:15px;
+  display:none;
+}
+.loading.show{display:block}
+.spinner{
+  width:28px;height:28px;margin:0 auto 14px;border-radius:50%;
+  border:3px solid rgba(0,0,0,.08);border-top-color:var(--blue);
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{text-align:center;color:var(--text3);font-size:15px;padding:60px 20px;line-height:1.6}
+/* ---------- Library ---------- */
+.lib-toolbar{max-width:680px;margin:0 auto 20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.search{
+  flex:1;min-width:200px;border:1px solid var(--line);border-radius:99px;
+  padding:10px 18px;font-family:inherit;font-size:15px;background:var(--card);outline:none;
+}
+.search:focus{border-color:var(--blue)}
+.lib-tag{font-size:12px;color:var(--text3)}
+/* ---------- Settings ---------- */
+.set-card{max-width:560px;margin:0 auto;background:var(--card);border-radius:var(--radius);padding:30px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.05)}
+.set-row{margin-bottom:24px}
+.set-row label{display:block;font-size:14px;font-weight:600;margin-bottom:8px}
+.set-row .hint{font-size:13px;color:var(--text2);margin-top:8px;line-height:1.5}
+.set-row input[type=password],.set-row input[type=text]{
+  width:100%;border:1px solid var(--line);border-radius:var(--radius-s);
+  padding:12px 14px;font-family:inherit;font-size:15px;outline:none;background:var(--bg);
+}
+.set-row input:focus{border-color:var(--blue)}
+.toast{
+  position:fixed;bottom:34px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:rgba(29,29,31,.92);color:#fff;font-size:14px;border-radius:99px;
+  padding:11px 22px;opacity:0;pointer-events:none;transition:all .3s ease;z-index:99;
+  backdrop-filter:blur(10px);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ---------- Mobile ---------- */
+@media (max-width:640px){
+  html{font-size:16px}
+  .nav-inner{padding:0 12px}
+  .logo span{display:none}
+  .tab{padding:6px 10px;font-size:12px}
+  .page{padding:28px 16px 70px}
+  .card{padding:20px}
+  .quote{font-size:19px}
+  .btn{width:100%;margin:0}
+  .opts{flex-direction:column}
+  select{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo">出处<span>溯源与金句</span></div>
+    <div class="tabs">
+      <button class="tab active" data-page="trace">溯源</button>
+      <button class="tab" data-page="polish">金句化</button>
+      <button class="tab" data-page="lib">引用库</button>
+      <button class="tab" data-page="set">设置</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ 溯源 ============ -->
+<section class="page active" id="page-trace">
+  <div class="hero">
+    <h1>这句话，出自哪里？</h1>
+    <p>输入你记得的大意，找到真实的原文与出处。</p>
+  </div>
+  <div class="inputwrap">
+    <textarea id="traceInput" placeholder="例如：人类之所以能大规模协作，是因为相信共同的虚构故事……"></textarea>
+    <div class="opts">
+      <button class="btn" id="traceBtn">溯源</button>
+    </div>
+  </div>
+  <div class="loading" id="traceLoading"><div class="spinner"></div>正在检索真实出处…</div>
+  <div class="results" id="traceResults"></div>
+</section>
+
+<!-- ============ 金句化 ============ -->
+<section class="page" id="page-polish">
+  <div class="hero">
+    <h1>把意思，说成金句。</h1>
+    <p>真实名家引用，或为你原创改写——两者绝不混淆。</p>
+  </div>
+  <div class="inputwrap">
+    <textarea id="polishInput" placeholder="输入你想表达的意思，例如：坚持长期主义，不要被短期波动干扰……"></textarea>
+    <div class="opts">
+      <select id="polishScene">
+        <option value="日常交谈">场景 · 日常交谈</option>
+        <option value="演讲发言">场景 · 演讲发言</option>
+        <option value="文章写作">场景 · 文章写作</option>
+        <option value="社交媒体">场景 · 社交媒体</option>
+      </select>
+      <select id="polishTone">
+        <option value="哲思">语气 · 哲思</option>
+        <option value="温暖">语气 · 温暖</option>
+        <option value="犀利">语气 · 犀利</option>
+        <option value="幽默">语气 · 幽默</option>
+      </select>
+      <button class="btn" id="polishBtn">生成</button>
+    </div>
+  </div>
+  <div class="loading" id="polishLoading"><div class="spinner"></div>正在匹配真实引用并改写…</div>
+  <div id="polishOut"></div>
+</section>
+
+<!-- ============ 引用库 ============ -->
+<section class="page" id="page-lib">
+  <div class="hero">
+    <h1>引用库</h1>
+    <p>收藏的真实引用与原创改写，保存在本机。</p>
+  </div>
+  <div class="lib-toolbar">
+    <input class="search" id="libSearch" placeholder="搜索内容、作者或作品…">
+    <button class="btn-ghost" id="libExport">导出</button>
+    <button class="btn-ghost" id="libImport">导入</button>
+    <input type="file" id="libFile" accept=".json" hidden>
+  </div>
+  <div class="results" id="libList"></div>
+</section>
+
+<!-- ============ 设置 ============ -->
+<section class="page" id="page-set">
+  <div class="hero">
+    <h1>设置</h1>
+    <p>仅需一个 DeepSeek API Key，数据全部保存在本机。</p>
+  </div>
+  <div class="set-card">
+    <div class="set-row">
+      <label>DeepSeek API Key</label>
+      <input type="password" id="setKey" placeholder="sk-...">
+      <div class="hint">在 platform.deepseek.com 创建后粘贴于此。Key 仅存储于本设备浏览器，不经过任何服务器。</div>
+    </div>
+    <div class="set-row">
+      <label>溯源模型</label>
+      <select id="setModel" style="width:100%">
+        <option value="deepseek-chat">deepseek-chat（V3，快）</option>
+        <option value="deepseek-reasoner">deepseek-reasoner（R1，更准但慢）</option>
+      </select>
+      <div class="hint">金句化始终使用 deepseek-chat 以保证速度。</div>
+    </div>
+    <div class="set-row" style="margin-bottom:0">
+      <button class="btn" id="setSave" style="width:100%;margin:0">保存</button>
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= 基础 ================= */
+const $=s=>document.querySelector(s);
+const store={
+  get k(){return localStorage.getItem('cc_key')||''},
+  set k(v){localStorage.setItem('cc_key',v)},
+  get model(){return localStorage.getItem('cc_model')||'deepseek-chat'},
+  set model(v){localStorage.setItem('cc_model',v)},
+  get lib(){try{return JSON.parse(localStorage.getItem('cc_lib')||'[]')}catch(e){return[]}},
+  set lib(v){localStorage.setItem('cc_lib',JSON.stringify(v))}
+};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+/* Tabs */
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  $('#page-'+t.dataset.page).classList.add('active');
+  if(t.dataset.page==='lib')renderLib();
+});
+
+/* ================= DeepSeek 调用 ================= */
+async function callDS(system,user,model){
+  if(!store.k){toast('请先在「设置」中填入 DeepSeek API Key');throw new Error('no key')}
+  const res=await fetch('https://api.deepseek.com/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+store.k},
+    body:JSON.stringify({
+      model:model||'deepseek-chat',
+      messages:[{role:'system',content:system},{role:'user',content:user}],
+      temperature:0.3,
+      max_tokens:2500
+    })
+  });
+  if(!res.ok){
+    const e=await res.text();
+    throw new Error('API '+res.status+': '+e.slice(0,200));
+  }
+  const data=await res.json();
+  let txt=data.choices?.[0]?.message?.content||'';
+  txt=txt.replace(/```json|```/g,'').trim();
+  const m=txt.match(/\{[\s\S]*\}/);
+  return JSON.parse(m?m[0]:txt);
+}
+
+/* ================= 溯源 ================= */
+const TRACE_SYS=`你是一位严谨的文献考据专家。用户会给你一句模糊记忆中的话，你的任务是找出它在真实世界中的出处。
+
+铁律：
+1. 绝对禁止编造出处。如果不确定，必须降低置信度并明确说明。
+2. 许多流行"名言"实为讹传（误归于名人），若属此情况必须在 misattribution 字段说明。
+3. 置信度标准：high=你非常确定原文和出处；mid=出处可能正确但原文措辞不确定；low=无法确证，仅为推测。
+4. 外文著作请同时给出原文(original)和通行中译(quote)。中文著作 original 留空。
+
+只返回严格 JSON，无任何其他文字：
+{
+ "found": true或false,
+ "quote": "通行中文原文",
+ "original": "外文原文（如适用，否则空字符串）",
+ "work": "作品名",
+ "author": "作者/导演/演讲者",
+ "year": "年份或朝代",
+ "chapter": "章节/场景/上下文位置（不确定则空）",
+ "confidence": "high|mid|low",
+ "misattribution": "讹传说明（无则空字符串）",
+ "context": "这句话的背景含义，60字内",
+ "alternatives": [{"quote":"...","work":"...","author":"...","note":"为何也可能是它"}]
+}
+若完全找不到可信出处，found 设为 false，并在 context 中诚实说明，alternatives 给出最接近的真实表达。`;
+
+$('#traceBtn').onclick=async()=>{
+  const q=$('#traceInput').value.trim();
+  if(!q)return toast('请输入要溯源的话');
+  const btn=$('#traceBtn'),load=$('#traceLoading'),out=$('#traceResults');
+  btn.disabled=true;load.classList.add('show');out.innerHTML='';
+  try{
+    const r=await callDS(TRACE_SYS,q,store.model);
+    out.innerHTML=traceCard(r);
+  }catch(e){
+    if(e.message!=='no key')out.innerHTML=`<div class="card"><div class="context">请求失败：${esc(e.message)}。请检查 Key 与网络后重试。</div></div>`;
+  }
+  btn.disabled=false;load.classList.remove('show');
+};
+
+function badge(c){
+  const map={high:['high','高置信'],mid:['mid','中置信 · 建议核实'],low:['low','低置信 · 不建议引用出处']};
+  const[k,t]=map[c]||map.low;
+  return `<span class="badge ${k}">${t}</span>`;
+}
+
+function traceCard(r){
+  if(!r.found){
+    return `<div class="card">
+      <div class="quote" style="font-size:17px;color:var(--text2)">未找到可确证的出处</div>
+      <div class="context">${esc(r.context||'这句话可能并非出自某部著作，或表达方式差异过大。')}</div>
+      ${altBlock(r.alternatives)}
+    </div>`;
+  }
+  return `<div class="card">
+    <div class="quote">“${esc(r.quote)}”</div>
+    ${r.original?`<div class="quote-orig">${esc(r.original)}</div>`:''}
+    <div class="meta">
+      <span class="source"><b>${esc(r.author)}</b> · 《${esc(r.work)}》${r.year?' · '+esc(r.year):''}</span>
+      ${badge(r.confidence)}
+    </div>
+    ${r.chapter?`<div class="context">位置：${esc(r.chapter)}</div>`:''}
+    ${r.misattribution?`<div class="warn">⚠ 讹传提示：${esc(r.misattribution)}</div>`:''}
+    <div class="context">${esc(r.context||'')}</div>
+    ${altBlock(r.alternatives)}
+    <div class="cardfoot">
+      <button class="btn-ghost" onclick='saveLib(${JSON.stringify(JSON.stringify({type:"quote",quote:r.quote,original:r.original,work:r.work,author:r.author,year:r.year,confidence:r.confidence}))})'>收藏</button>
+      <button class="btn-ghost" onclick='copyText(${JSON.stringify(JSON.stringify(`“${r.quote}” —— ${r.author}《${r.work}》`))})'>复制引用</button>
+    </div>
+  </div>`;
+}
+
+function altBlock(alts){
+  if(!alts||!alts.length)return'';
+  return `<details class="alt"><summary>其他可能的出处（${alts.length}）</summary>
+    ${alts.map(a=>`<div class="alt-item">“${esc(a.quote)}” —— ${esc(a.author)}《${esc(a.work)}》${a.note?'<br><span style="color:var(--text3)">'+esc(a.note)+'</span>':''}</div>`).join('')}
+  </details>`;
+}
+
+/* ================= 金句化 ================= */
+const POLISH_SYS=`你是表达顾问。用户给出一个想表达的意思，你做两件事：
+
+A. real_quotes：找出 1-3 条真实存在的名家金句，表达与用户意思相近。
+铁律：必须是真实世界确实存在的引用，绝对禁止编造。宁可只给 1 条甚至 0 条，不可造假。每条自评置信度，仅 high/mid 可给出，low 的不要列出。
+B. rewrites：将用户的意思原创改写为 3 条金句质感的表达（这是创作，不挂任何人的名字），风格符合用户指定的场景与语气，每条不超过 40 字，三条风格各异。
+
+只返回严格 JSON：
+{
+ "real_quotes":[{"quote":"中文","original":"外文原文或空","work":"作品","author":"作者","year":"年份","confidence":"high|mid","note":"与用户意思的契合点，30字内"}],
+ "rewrites":[{"text":"改写句","style":"风格标签如：凝练/比喻/反问"}]
+}`;
+
+$('#polishBtn').onclick=async()=>{
+  const q=$('#polishInput').value.trim();
+  if(!q)return toast('请输入想表达的意思');
+  const btn=$('#polishBtn'),load=$('#polishLoading'),out=$('#polishOut');
+  btn.disabled=true;load.classList.add('show');out.innerHTML='';
+  try{
+    const user=`想表达的意思：${q}\n使用场景：${$('#polishScene').value}\n期望语气：${$('#polishTone').value}`;
+    const r=await callDS(POLISH_SYS,user,'deepseek-chat');
+    let html='';
+    if(r.real_quotes&&r.real_quotes.length){
+      html+=`<div class="sec-label">真实名家引用 · 可注明出处</div><div class="results">`;
+      html+=r.real_quotes.map(x=>`<div class="card">
+        <div class="quote">“${esc(x.quote)}”</div>
+        ${x.original?`<div class="quote-orig">${esc(x.original)}</div>`:''}
+        <div class="meta"><span class="source"><b>${esc(x.author)}</b> · 《${esc(x.work)}》${x.year?' · '+esc(x.year):''}</span>${badge(x.confidence)}</div>
+        ${x.note?`<div class="context">${esc(x.note)}</div>`:''}
+        <div class="cardfoot">
+          <button class="btn-ghost" onclick='saveLib(${JSON.stringify(JSON.stringify({type:"quote",quote:x.quote,original:x.original,work:x.work,author:x.author,year:x.year,confidence:x.confidence}))})'>收藏</button>
+          <button class="btn-ghost" onclick='copyText(${JSON.stringify(JSON.stringify(`“${x.quote}” —— ${x.author}《${x.work}》`))})'>复制引用</button>
+        </div>
+      </div>`).join('');
+      html+=`</div>`;
+    }else{
+      html+=`<div class="sec-label">真实名家引用</div><div class="results"><div class="card"><div class="context">未找到足够可信的真实引用——为避免假名言，此处宁缺毋滥。可参考下方原创改写。</div></div></div>`;
+    }
+    if(r.rewrites&&r.rewrites.length){
+      html+=`<div class="sec-label">原创改写 · 以你自己的名义说</div><div class="results">`;
+      html+=r.rewrites.map(x=>`<div class="card">
+        <div class="quote">“${esc(x.text)}”</div>
+        <div class="meta"><span class="badge rewrite">原创改写${x.style?' · '+esc(x.style):''}</span></div>
+        <div class="cardfoot">
+          <button class="btn-ghost" onclick='saveLib(${JSON.stringify(JSON.stringify({type:"rewrite",quote:x.text,style:x.style||""}))})'>收藏</button>
+          <button class="btn-ghost" onclick='copyText(${JSON.stringify(JSON.stringify(x.text))})'>复制</button>
+        </div>
+      </div>`).join('');
+      html+=`</div>`;
+    }
+    out.innerHTML=html;
+  }catch(e){
+    if(e.message!=='no key')out.innerHTML=`<div class="results"><div class="card"><div class="context">请求失败：${esc(e.message)}</div></div></div>`;
+  }
+  btn.disabled=false;load.classList.remove('show');
+};
+
+/* ================= 引用库 ================= */
+window.saveLib=function(jsonStr){
+  const item=JSON.parse(jsonStr);
+  item.id=Date.now();item.date=new Date().toISOString().slice(0,10);
+  const lib=store.lib;lib.unshift(item);store.lib=lib;
+  toast('已收藏到引用库');
+};
+window.copyText=function(jsonStr){
+  const t=JSON.parse(jsonStr);
+  navigator.clipboard.writeText(t).then(()=>toast('已复制')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('已复制');
+  });
+};
+window.delLib=function(id){
+  store.lib=store.lib.filter(x=>x.id!==id);renderLib();toast('已删除');
+};
+function renderLib(){
+  const kw=($('#libSearch').value||'').toLowerCase();
+  const lib=store.lib.filter(x=>!kw||JSON.stringify(x).toLowerCase().includes(kw));
+  const el=$('#libList');
+  if(!lib.length){el.innerHTML=`<div class="empty">还没有收藏。<br>在「溯源」或「金句化」的结果卡片上点击收藏即可。</div>`;return}
+  el.innerHTML=lib.map(x=>`<div class="card">
+    <div class="quote" style="font-size:18px">“${esc(x.quote)}”</div>
+    ${x.original?`<div class="quote-orig">${esc(x.original)}</div>`:''}
+    <div class="meta">
+      ${x.type==='quote'
+        ?`<span class="source"><b>${esc(x.author)}</b> · 《${esc(x.work)}》${x.year?' · '+esc(x.year):''}</span>${badge(x.confidence)}`
+        :`<span class="badge rewrite">原创改写${x.style?' · '+esc(x.style):''}</span>`}
+      <span class="lib-tag">${esc(x.date||'')}</span>
+    </div>
+    <div class="cardfoot">
+      <button class="btn-ghost" onclick='copyText(${JSON.stringify(JSON.stringify(x.type==="quote"?`“${x.quote}” —— ${x.author}《${x.work}》`:x.quote))})'>复制</button>
+      <button class="btn-ghost" style="color:var(--red)" onclick="delLib(${x.id})">删除</button>
+    </div>
+  </div>`).join('');
+}
+$('#libSearch').oninput=renderLib;
+$('#libExport').onclick=()=>{
+  const blob=new Blob([JSON.stringify(store.lib,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='出处-引用库.json';a.click();
+};
+$('#libImport').onclick=()=>$('#libFile').click();
+$('#libFile').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{
+    const arr=JSON.parse(r.result);
+    if(!Array.isArray(arr))throw 0;
+    const lib=store.lib,ids=new Set(lib.map(x=>x.id));
+    arr.forEach(x=>{if(!ids.has(x.id))lib.push(x)});
+    lib.sort((a,b)=>(b.id||0)-(a.id||0));store.lib=lib;renderLib();toast('导入完成');
+  }catch(_){toast('文件格式有误')}};
+  r.readAsText(f);e.target.value='';
+};
+
+/* ================= 设置 ================= */
+$('#setKey').value=store.k;
+$('#setModel').value=store.model;
+$('#setSave').onclick=()=>{
+  store.k=$('#setKey').value.trim();
+  store.model=$('#setModel').value;
+  toast('已保存');
+};
+</script>
+</body>
+</html>
