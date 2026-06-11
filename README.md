@@ -8,7 +8,7 @@
 
 单文件 HTML · 零依赖 · 零后端 · 数据本地存储
 
-[立即使用](#-快速开始) · [功能介绍](#-功能) · [截图](#-截图) · [English](#english)
+[立即使用](https://chuchu.gzl406633204.workers.dev) · [功能介绍](#-功能)  · [English](#english)
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![HTML](https://img.shields.io/badge/built%20with-HTML%2FJS-orange.svg)
